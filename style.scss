@@ -1,19 +1,32 @@
-$primary-bg: #3b3b98;
-$secondary-bg: #23235b;
-$third-bg: #adf0f7;
-$text-color: #fff;
+// Modern Professional Color Palette
+$primary-bg: #6366f1;        // Modern indigo - better contrast
+$primary-hover: #4f46e5;     // Darker indigo for hover
+$secondary-bg: #1e293b;      // Dark slate blue - more sophisticated
+$background: #0f172a;        // Deep navy background - better than light blue
+$surface: #334155;           // Medium slate for input backgrounds
+$text-primary: #f8fafc;      // Soft white for primary text
+$text-secondary: #cbd5e1;    // Light gray for secondary text
+$accent: #10b981;            // Emerald green for success states
+$accent-hover: #059669;      // Darker emerald for hover
 
-@mixin button-style ($bg-color, $font-size:16px) {
+@mixin button-style ($bg-color, $hover-color, $font-size:16px) {
     border: none;
     background-color: $bg-color;
-    color: $text-color;
+    color: $text-primary;
     font-size: $font-size;
     padding: 8px 12px;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: all 0.3s ease;
+    border-radius: 6px;
 
     &:hover {
-        background-color: lighten($bg-color, 10%);
+        background-color: $hover-color;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba($bg-color, 0.3);
+    }
+
+    &:active {
+        transform: translateY(0);
     }
 }
 
@@ -22,53 +35,84 @@ $text-color: #fff;
 }
 
 body {
-    background-color: $third-bg;
-    color: $text-color;
+    background: linear-gradient(135deg, $background 0%, darken($background, 5%) 100%);
+    color: $text-primary;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 .container {
     background-color: $secondary-bg;
-    box-shadow: 0px 2px 10px rgba(255, 255, 255, 0.2);
-    padding: 20px;
-    width: 350px;
-    max-width: 100%;
-    border-radius: 8px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    width: 400px;
+    max-width: 90%;
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
     
     header {
         text-align: center;
-        margin-bottom: 20px;
+        margin-bottom: 30px;
+        
+        h1 {
+            color: $text-primary;
+            font-size: 28px;
+            font-weight: 700;
+            margin: 0;
+            background: linear-gradient(135deg, $primary-bg, $accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
     }
 
     .result-container {
-        background-color: rgba(0, 0, 0, 0.4);
+        background-color: $surface;
         display: flex;
         align-items: center;
-        padding: 12px 10px;
-        height: 50px;
-        margin-bottom: 20px;
+        padding: 15px;
+        height: 60px;
+        margin-bottom: 25px;
         position: relative;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+
+        #result {
+            color: $text-primary;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 14px;
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
 
         .btn {
-            @include button-style($primary-bg, 20px);
+            @include button-style($accent, $accent-hover, 18px);
             position: absolute;
-            top: 5px;
-            right: 5px;
+            top: 10px;
+            right: 10px;
             width: 40px;
             height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
     }
 
     .btn {
-        @include button-style($primary-bg);
+        @include button-style($primary-bg, $primary-hover);
+        
         &.btn-large {
             width: 100%;
-            margin-top: 10px;
-            padding: 12px;
-            font-size: 18px;
+            margin-top: 20px;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 600;
         }
     }
 
@@ -77,10 +121,38 @@ body {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin: 15px 0;
+            margin: 20px 0;
+            
+            label {
+                color: $text-secondary;
+                font-size: 14px;
+                font-weight: 500;
+            }
+            
+            input[type="number"] {
+                background-color: $surface;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                color: $text-primary;
+                padding: 8px 12px;
+                border-radius: 6px;
+                width: 80px;
+                text-align: center;
+                
+                &:focus {
+                    outline: none;
+                    border-color: $primary-bg;
+                    box-shadow: 0 0 0 3px rgba($primary-bg, 0.2);
+                }
+            }
+            
+            input[type="checkbox"] {
+                width: 20px;
+                height: 20px;
+                accent-color: $primary-bg;
+                cursor: pointer;
+            }
         }
     }
-    
 }
 
 
